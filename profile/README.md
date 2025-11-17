@@ -85,16 +85,16 @@ flowchart TB
     
     Charts -->|"Display"| User
 
-    style User fill:#e1f5ff,stroke:#01579b,stroke-width:3px
-    style Frontend fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    style API fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    style Cache fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    style RAG fill:#e8f5e9,stroke:#1b5e20,stroke-width:3px
-    style AI fill:#fce4ec,stroke:#880e4f,stroke-width:3px
-    style DataExec fill:#e0f2f1,stroke:#004d40,stroke-width:3px
-    style Engine fill:#ede7f6,stroke:#311b92,stroke-width:3px
-    style CacheStore fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    style Charts fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px
+    style User fill:#0288d1,stroke:#01579b,stroke-width:3px,color:#fff
+    style Frontend fill:#f57c00,stroke:#e65100,stroke-width:2px,color:#fff
+    style API fill:#7b1fa2,stroke:#4a148c,stroke-width:2px,color:#fff
+    style Cache fill:#fbc02d,stroke:#f57f17,stroke-width:2px,color:#000
+    style RAG fill:#388e3c,stroke:#1b5e20,stroke-width:3px,color:#fff
+    style AI fill:#c2185b,stroke:#880e4f,stroke-width:3px,color:#fff
+    style DataExec fill:#00796b,stroke:#004d40,stroke-width:3px,color:#fff
+    style Engine fill:#5e35b1,stroke:#311b92,stroke-width:3px,color:#fff
+    style CacheStore fill:#fbc02d,stroke:#f57f17,stroke-width:2px,color:#000
+    style Charts fill:#8e24aa,stroke:#6a1b9a,stroke-width:2px,color:#fff
 ```
 
 ### 🔬 Deep Dive Architecture
@@ -181,15 +181,15 @@ flowchart TB
     GraphRenderer -->|"Interactive Chart"| User
     TableRenderer -->|"Data Table"| User
 
-    style User fill:#e1f5ff,stroke:#01579b,stroke-width:2px
-    style Angular fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    style Controller fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    style SchemaFile fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    style CacheStorage fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    style VertexAI fill:#fce4ec,stroke:#880e4f,stroke-width:3px
-    style BigQuery fill:#e0f2f1,stroke:#004d40,stroke-width:2px
-    style Formatter fill:#ede7f6,stroke:#311b92,stroke-width:3px
-    style GraphRenderer fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px
+    style User fill:#0288d1,stroke:#01579b,stroke-width:2px,color:#fff
+    style Angular fill:#f57c00,stroke:#e65100,stroke-width:2px,color:#fff
+    style Controller fill:#7b1fa2,stroke:#4a148c,stroke-width:2px,color:#fff
+    style SchemaFile fill:#388e3c,stroke:#1b5e20,stroke-width:2px,color:#fff
+    style CacheStorage fill:#fbc02d,stroke:#f57f17,stroke-width:2px,color:#000
+    style VertexAI fill:#c2185b,stroke:#880e4f,stroke-width:3px,color:#fff
+    style BigQuery fill:#00796b,stroke:#004d40,stroke-width:2px,color:#fff
+    style Formatter fill:#5e35b1,stroke:#311b92,stroke-width:3px,color:#fff
+    style GraphRenderer fill:#8e24aa,stroke:#6a1b9a,stroke-width:2px,color:#fff
 ```
 
 The system follows a clean architecture with clear separation of concerns:

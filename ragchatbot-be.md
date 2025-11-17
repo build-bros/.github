@@ -1005,5 +1005,5 @@ bq query --use_legacy_sql=false 'SELECT full_name, AVG(points) as avg_points FRO
 
 ---
 
-**For more information**, see the [main organization README](./README.md) and [frontend documentation](./ragchatbot-fe.md).
+**For more information**, see the [main organization README](./profile/README.md) and [frontend documentation](./ragchatbot-fe.md).
 

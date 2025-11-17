@@ -1157,5 +1157,5 @@ For large message lists, use Angular CDK:
 
 ---
 
-**For more information**, see the [main organization README](./README.md) and [backend documentation](./ragchatbot-be.md).
+**For more information**, see the [main organization README](./profile/README.md) and [backend documentation](./ragchatbot-be.md).
 

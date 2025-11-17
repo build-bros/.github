@@ -21,8 +21,8 @@ An intelligent chatbot system that enables users to query NCAA basketball data u
 - Interactive Plotly.js charts with hover details and legends
 
 **Projects:**
-- **ragchatbot-be**: Spring Boot backend service ([detailed docs](.github/ragchatbot-be.md))
-- **ragchatbot-fe**: Angular frontend application ([detailed docs](.github/ragchatbot-fe.md))
+- **ragchatbot-be**: Spring Boot backend service ([detailed docs](../ragchatbot-be.md))
+- **ragchatbot-fe**: Angular frontend application ([detailed docs](../ragchatbot-fe.md))
 
 ## 🛠️ Technology Stack
 
@@ -50,11 +50,10 @@ An intelligent chatbot system that enables users to query NCAA basketball data u
 ## 📚 Project Documentation
 
 ### Quick Links
-- [Backend Architecture Deep Dive](./ragchatbot-be.md) - Comprehensive guide to the Spring Boot backend
-- [Frontend Architecture Deep Dive](./ragchatbot-fe.md) - Complete Angular frontend documentation
-- [Backend README](../ragchatbot-be/README.md) - Setup and development guide
-- [Frontend README](../ragchatbot-fe/README.md) - Setup and development guide
-- [Deployment Guide](../DEPLOYMENT.md) - Kubernetes deployment instructions
+- [Backend Architecture Deep Dive](../ragchatbot-be.md) - Comprehensive guide to the Spring Boot backend
+- [Frontend Architecture Deep Dive](../ragchatbot-fe.md) - Complete Angular frontend documentation
+- [Backend README](../../ragchatbot-be/README.md) - Setup and development guide
+- [Frontend README](../../ragchatbot-fe/README.md) - Setup and development guide
 
 ## 🏗️ System Architecture Overview
 

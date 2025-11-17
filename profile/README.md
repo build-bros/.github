@@ -58,17 +58,96 @@ An intelligent chatbot system that enables users to query NCAA basketball data u
 ## 🏗️ System Architecture Overview
 
 ```mermaid
-graph LR
-    User[User Browser] -->|Natural Language Query| FE[Angular Frontend]
-    FE -->|HTTP POST /api/chat| BE[Spring Boot Backend]
-    BE -->|Schema Context| BQ_Schema[BigQuery Schema Service]
-    BE -->|Generate SQL| VA[Vertex AI - Gemini 2.5 Pro]
-    VA -->|SQL Query| BE
-    BE -->|Execute SQL| BQ[BigQuery NCAA Dataset]
-    BQ -->|Result Set| BE
-    BE -->|Transform & Format| FE
-    FE -->|Render Chart/Table| User
-    BE -->|Cache| Cache[(Query Cache)]
+flowchart TB
+    subgraph Frontend["🎨 Frontend Layer"]
+        User["👤 User Browser"]
+        Angular["Angular App<br/>ChatComponent"]
+        GraphRenderer["GraphRendererComponent<br/>Plotly.js Charts"]
+        TableRenderer["TableRendererComponent<br/>Data Tables"]
+    end
+
+    subgraph Backend["⚙️ Backend API Layer"]
+        Controller["ChatController<br/>/api/chat endpoint"]
+        
+        subgraph RAG["📚 RAG Context Setup"]
+            SchemaFile[("table-schema.json<br/>BigQuery Schema")]
+            SchemaService["BigQuerySchemaService<br/>Schema Loader"]
+        end
+        
+        subgraph Cache["💾 Query Cache Layer"]
+            CacheCheck{"Cache Hit?<br/>SqlQueryStorageService"}
+            CacheStorage[("logs/sql-queries.json<br/>Query History")]
+        end
+        
+        subgraph AILayer["🤖 AI Generation Layer"]
+            Agent["NcaaBasketballAgent<br/>SQL Generation Orchestrator"]
+            VertexAI["Vertex AI<br/>Gemini 2.5 Pro"]
+        end
+        
+        subgraph DataLayer["🗄️ Data Execution Layer"]
+            BQService["BigQueryExecutionService<br/>Query Executor"]
+            BigQuery[("BigQuery<br/>NCAA Basketball Dataset")]
+        end
+        
+        subgraph ResponseEngine["🔄 Response Generator Engine"]
+            Formatter["ChatResponseFormatter<br/>Orchestrator"]
+            Analyzer["QueryAnalyzer<br/>Intent Detection"]
+            StatsCollector["ResultStatsCollector<br/>Statistics Gathering"]
+            TransformerFactory["TransformerFactory<br/>Transformer Selection"]
+            Transformers["Transformers<br/>BarChart, LineChart<br/>BubbleChart, PieChart, Table"]
+            VizStrategy["VisualizationStrategy<br/>Data Formatting"]
+            TemplateEngine["ResponseTemplateEngine<br/>NL Message Generation"]
+        end
+    end
+
+    User -->|"Natural Language Query"| Angular
+    Angular -->|"HTTP POST"| Controller
+    
+    Controller --> CacheCheck
+    CacheCheck -->|"Hit"| CacheStorage
+    CacheStorage -->|"Cached Results"| Formatter
+    
+    CacheCheck -->|"Miss"| Agent
+    Agent -->|"Load Schema Context"| SchemaService
+    SchemaService -->|"Read"| SchemaFile
+    SchemaService -->|"Schema Context"| Agent
+    Agent -->|"Prompt + Schema"| VertexAI
+    VertexAI -->|"Generated SQL"| Agent
+    Agent -->|"Validated SQL"| BQService
+    
+    BQService -->|"Execute Query"| BigQuery
+    BigQuery -->|"BigQueryResult"| BQService
+    BQService -->|"Result Set"| Formatter
+    
+    Formatter --> Analyzer
+    Analyzer -->|"Query Intent"| Formatter
+    Formatter --> StatsCollector
+    StatsCollector -->|"Statistics"| Formatter
+    Formatter --> TransformerFactory
+    TransformerFactory --> Transformers
+    Transformers -->|"TransformedData"| VizStrategy
+    VizStrategy -->|"Formatted Data"| Formatter
+    Formatter --> TemplateEngine
+    TemplateEngine -->|"NL Message"| Formatter
+    
+    Formatter -->|"Store for Future"| CacheStorage
+    Formatter -->|"JSON Response"| Controller
+    Controller -->|"Response"| Angular
+    
+    Angular -->|"graphData"| GraphRenderer
+    Angular -->|"tableData"| TableRenderer
+    GraphRenderer -->|"Interactive Chart"| User
+    TableRenderer -->|"Data Table"| User
+
+    style User fill:#e1f5ff,stroke:#01579b,stroke-width:2px
+    style Angular fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style Controller fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    style SchemaFile fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    style CacheStorage fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style VertexAI fill:#fce4ec,stroke:#880e4f,stroke-width:3px
+    style BigQuery fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    style Formatter fill:#ede7f6,stroke:#311b92,stroke-width:3px
+    style GraphRenderer fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px
 ```
 
 The system follows a clean architecture with clear separation of concerns:

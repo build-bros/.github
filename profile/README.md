@@ -59,11 +59,11 @@ An intelligent chatbot system that enables users to query NCAA basketball data u
 
 ```mermaid
 flowchart LR
-    User["👤 User"] -->|"Natural Language Query"| Frontend["🎨 Frontend<br/><br/>Angular Application"]
+    User["👤 User"] -->|"Natural Language Query"| Frontend["🎨 Frontend Angular Application"]
     
     Frontend -->|"HTTP Request"| API["⚙️ Backend API<br/><br/>/api/chat"]
     
-    API --> Cache{"💾 Query Cache<br/><br/>Check"}
+    API --> Cache{"💾 Query Cache Check"}
     
     Cache -->|"Cache Miss"| RAG["📚 RAG Context<br/><br/>table-schema.json<br/>Schema Service"]
     
@@ -81,7 +81,7 @@ flowchart LR
     
     API -->|"JSON Response"| Frontend
     
-    Frontend -->|"Render"| Charts["📊 Interactive Charts<br/><br/>& Data Tables"]
+    Frontend -->|"Render"| Charts["📊 Interactive Charts & Data Tables"]
     
     Charts -->|"Display"| User
 

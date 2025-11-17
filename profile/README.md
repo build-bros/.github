@@ -59,6 +59,48 @@ An intelligent chatbot system that enables users to query NCAA basketball data u
 
 ```mermaid
 flowchart TB
+    User["👤 User"] -->|"Natural Language Query"| Frontend["🎨 Frontend<br/>Angular Application"]
+    
+    Frontend -->|"HTTP Request"| API["⚙️ Backend API<br/>/api/chat"]
+    
+    API --> Cache{"💾 Query Cache<br/>Check"}
+    
+    Cache -->|"Cache Miss"| RAG["📚 RAG Context<br/>table-schema.json<br/>Schema Service"]
+    
+    RAG -->|"Schema Context"| AI["🤖 AI Generation<br/>Vertex AI Gemini 2.5 Pro<br/>SQL Generation"]
+    
+    AI -->|"Generated SQL"| DataExec["🗄️ Data Execution<br/>BigQuery Service<br/>NCAA Dataset"]
+    
+    DataExec -->|"Query Results"| Engine["🔄 Response Engine<br/>Intelligent Formatting<br/>Analysis & Transformation"]
+    
+    Cache -->|"Cache Hit"| Engine
+    
+    Engine -->|"Store"| CacheStore[("💾 Query Cache<br/>logs/sql-queries.json")]
+    
+    Engine -->|"Formatted Response"| API
+    
+    API -->|"JSON Response"| Frontend
+    
+    Frontend -->|"Render"| Charts["📊 Interactive Charts<br/>& Data Tables"]
+    
+    Charts -->|"Display"| User
+
+    style User fill:#e1f5ff,stroke:#01579b,stroke-width:3px
+    style Frontend fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style API fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    style Cache fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style RAG fill:#e8f5e9,stroke:#1b5e20,stroke-width:3px
+    style AI fill:#fce4ec,stroke:#880e4f,stroke-width:3px
+    style DataExec fill:#e0f2f1,stroke:#004d40,stroke-width:3px
+    style Engine fill:#ede7f6,stroke:#311b92,stroke-width:3px
+    style CacheStore fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    style Charts fill:#e1bee7,stroke:#6a1b9a,stroke-width:2px
+```
+
+### 🔬 Deep Dive Architecture
+
+```mermaid
+flowchart TB
     subgraph Frontend["🎨 Frontend Layer"]
         User["👤 User Browser"]
         Angular["Angular App<br/>ChatComponent"]

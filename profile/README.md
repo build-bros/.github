@@ -59,29 +59,29 @@ An intelligent chatbot system that enables users to query NCAA basketball data u
 
 ```mermaid
 flowchart LR
-    User["👤 User"] -->|"Natural Language Query"| Frontend["🎨 Frontend<br/>Angular Application"]
+    User["👤 User"] -->|"Natural Language Query"| Frontend["🎨 Frontend<br/><br/>Angular Application"]
     
-    Frontend -->|"HTTP Request"| API["⚙️ Backend API<br/>/api/chat"]
+    Frontend -->|"HTTP Request"| API["⚙️ Backend API<br/><br/>/api/chat"]
     
-    API --> Cache{"💾 Query Cache<br/>Check"}
+    API --> Cache{"💾 Query Cache<br/><br/>Check"}
     
-    Cache -->|"Cache Miss"| RAG["📚 RAG Context<br/>table-schema.json<br/>Schema Service"]
+    Cache -->|"Cache Miss"| RAG["📚 RAG Context<br/><br/>table-schema.json<br/>Schema Service"]
     
-    RAG -->|"Schema Context"| AI["🤖 AI Generation<br/>Vertex AI Gemini 2.5 Pro<br/>SQL Generation"]
+    RAG -->|"Schema Context + System Prompt"| AI["🤖 AI SQL Generation<br/><br/>Vertex AI Gemini 2.5 Pro"]
     
-    AI -->|"Generated SQL"| DataExec["🗄️ Data Execution<br/>BigQuery Service<br/>NCAA Dataset"]
+    AI -->|"Generated SQL"| DataExec["🗄️ Data Execution<br/><br/>BigQuery Service<br/>NCAA Dataset"]
     
-    DataExec -->|"Query Results"| Engine["🔄 Response Engine<br/>Intelligent Formatting<br/>Analysis & Transformation"]
+    DataExec -->|"Query Results"| Engine["🔄 Response Engine<br/><br/>Intelligent Formatting<br/>Analysis & Transformation"]
     
     Cache -->|"Cache Hit"| Engine
     
-    Engine -->|"Store"| CacheStore[("💾 Query Cache<br/>logs/sql-queries.json")]
+    Engine -->|"Store"| CacheStore[("💾 Query Cache<br/><br/>logs/sql-queries.json")]
     
     Engine -->|"Formatted Response"| API
     
     API -->|"JSON Response"| Frontend
     
-    Frontend -->|"Render"| Charts["📊 Interactive Charts<br/>& Data Tables"]
+    Frontend -->|"Render"| Charts["📊 Interactive Charts<br/><br/>& Data Tables"]
     
     Charts -->|"Display"| User
 
@@ -113,32 +113,32 @@ flowchart TB
         
         subgraph RAG["📚 RAG Context Setup"]
             SchemaFile[("table-schema.json<br/>BigQuery Schema")]
-            SchemaService["BigQuerySchemaService<br/>Schema Loader"]
+            SchemaService["Schema Service<br/><br/>BigQuerySchemaService"]
         end
         
         subgraph Cache["💾 Query Cache Layer"]
-            CacheCheck{"Cache Hit?<br/>SqlQueryStorageService"}
-            CacheStorage[("logs/sql-queries.json<br/>Query History")]
+            CacheCheck{"Cache Hit?<br/><br/>SqlQueryStorageService"}
+            CacheStorage[("Query Cache<br/><br/>logs/sql-queries.json")]
         end
         
         subgraph AILayer["🤖 AI Generation Layer"]
-            Agent["NcaaBasketballAgent<br/>SQL Generation Orchestrator"]
-            VertexAI["Vertex AI<br/>Gemini 2.5 Pro"]
+            Agent["SQL Generation Agent<br/><br/>NcaaBasketballAgent"]
+            VertexAI["Vertex AI<br/><br/>Gemini 2.5 Pro"]
         end
         
         subgraph DataLayer["🗄️ Data Execution Layer"]
-            BQService["BigQueryExecutionService<br/>Query Executor"]
-            BigQuery[("BigQuery<br/>NCAA Basketball Dataset")]
+            BQService["Query Executor<br/><br/>BigQueryExecutionService"]
+            BigQuery[("BigQuery<br/><br/>NCAA Basketball Dataset")]
         end
         
         subgraph ResponseEngine["🔄 Response Generator Engine"]
-            Formatter["ChatResponseFormatter<br/>Orchestrator"]
-            Analyzer["QueryAnalyzer<br/>Intent Detection"]
-            StatsCollector["ResultStatsCollector<br/>Statistics Gathering"]
-            TransformerFactory["TransformerFactory<br/>Transformer Selection"]
-            Transformers["Transformers<br/>BarChart, LineChart<br/>BubbleChart, PieChart, Table"]
-            VizStrategy["VisualizationStrategy<br/>Data Formatting"]
-            TemplateEngine["ResponseTemplateEngine<br/>NL Message Generation"]
+            Formatter["Formatter Orchestrator<br/><br/>ChatResponseFormatter"]
+            Analyzer["Intent Analyzer<br/><br/>QueryAnalyzer"]
+            StatsCollector["Stats Collector<br/><br/>ResultStatsCollector"]
+            TransformerFactory["Transformer Factory<br/><br/>TransformerFactory"]
+            Transformers["Data Transformers<br/><br/>Bar, Line, Bubble, Pie, Table"]
+            VizStrategy["Visualization Strategy<br/><br/>VisualizationStrategy"]
+            TemplateEngine["Template Engine<br/><br/>ResponseTemplateEngine"]
         end
     end
 
@@ -153,7 +153,7 @@ flowchart TB
     Agent -->|"Load Schema Context"| SchemaService
     SchemaService -->|"Read"| SchemaFile
     SchemaService -->|"Schema Context"| Agent
-    Agent -->|"Prompt + Schema"| VertexAI
+    Agent -->|"Schema Context + System Prompt"| VertexAI
     VertexAI -->|"Generated SQL"| Agent
     Agent -->|"Validated SQL"| BQService
     

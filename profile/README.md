@@ -58,7 +58,7 @@ An intelligent chatbot system that enables users to query NCAA basketball data u
 ## 🏗️ System Architecture Overview
 
 ```mermaid
-flowchart TB
+flowchart LR
     User["👤 User"] -->|"Natural Language Query"| Frontend["🎨 Frontend<br/>Angular Application"]
     
     Frontend -->|"HTTP Request"| API["⚙️ Backend API<br/>/api/chat"]

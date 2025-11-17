@@ -580,7 +580,7 @@ graph TD
 
 3. **Export environment variables** (or use a .env loader):
    ```bash
-   export $(cat .env | xargs)
+   export $(grep -v '^#' .env | xargs)
    ```
 
 #### Required Environment Variables

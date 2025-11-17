@@ -1,6 +1,6 @@
-# raga-aidev Organization
+# RAGA-AIDEV Organization
 
-Welcome to **raga-aidev**, an organization focused on building intelligent, AI-powered data analysis tools that make complex datasets accessible through natural language interfaces.
+Welcome to **raga-aidev**, an organization focused on building intelligent, AI-powered data analysis tools that make complex datasets accessible through natural language interfaces. Currently solely developed and maintained by [ragadani](https://github.com/ragadani). :blush:
 
 ## 🎯 Mission
 

@@ -556,41 +556,69 @@ graph TD
 
 ## Configuration
 
+### Environment Variables Setup
+
+**IMPORTANT**: Never commit `.env` files or sensitive credentials to version control.
+
+#### Local Development Setup
+
+1. **Copy the example environment file**:
+   ```bash
+   cd ragchatbot-be
+   cp .env.example .env
+   ```
+
+2. **Edit `.env` and fill in your values**:
+   ```env
+   GCP_PROJECT_ID=your-actual-gcp-project-id
+   GCP_VERTEX_AI_LOCATION=us-central1
+   GCP_VERTEX_AI_MODEL=gemini-2.5-pro
+   GCP_BIGQUERY_DATASET=bigquery-public-data
+   GCP_BIGQUERY_SCHEMA=ncaa_basketball
+   CORS_ALLOWED_ORIGINS=http://localhost:4200
+   ```
+
+3. **Export environment variables** (or use a .env loader):
+   ```bash
+   export $(cat .env | xargs)
+   ```
+
+#### Required Environment Variables
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `GCP_PROJECT_ID` | **Yes** | None | Your Google Cloud Project ID |
+| `GCP_VERTEX_AI_LOCATION` | No | `us-central1` | Vertex AI region |
+| `GCP_VERTEX_AI_MODEL` | No | `gemini-2.5-pro` | Model name for SQL generation |
+| `GCP_BIGQUERY_DATASET` | No | `bigquery-public-data` | BigQuery dataset name |
+| `GCP_BIGQUERY_SCHEMA` | No | `ncaa_basketball` | BigQuery schema name |
+| `CORS_ALLOWED_ORIGINS` | No | `http://localhost:4200` | Allowed CORS origins |
+
 ### Application Properties
 
 **File**: `src/main/resources/application.properties`
+
+The application properties file uses environment variable interpolation:
 
 ```properties
 # Application
 spring.application.name=ragchatbot-be
 server.port=8080
 
-# GCP Configuration
-gcp.project-id=your-gcp-project-id
-gcp.bigquery.dataset=bigquery-public-data
-gcp.bigquery.schema=ncaa_basketball
+# GCP Configuration - Uses environment variables
+gcp.project-id=${GCP_PROJECT_ID}
+gcp.bigquery.dataset=${GCP_BIGQUERY_DATASET:bigquery-public-data}
+gcp.bigquery.schema=${GCP_BIGQUERY_SCHEMA:ncaa_basketball}
 
-# Vertex AI Configuration
-gcp.vertexai.location=us-central1
-gcp.vertexai.model=gemini-2.5-pro
+# Vertex AI Configuration - Uses environment variables
+gcp.vertexai.location=${GCP_VERTEX_AI_LOCATION:us-central1}
+gcp.vertexai.model=${GCP_VERTEX_AI_MODEL:gemini-2.5-pro}
 
-# CORS Configuration
-spring.web.cors.allowed-origins=http://localhost:4200
-spring.web.cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS
-spring.web.cors.allowed-headers=*
-
-# SQL Query Storage Configuration
-sql.storage.max-result-rows=100
+# CORS Configuration - Uses environment variables
+spring.web.cors.allowed-origins=${CORS_ALLOWED_ORIGINS:http://localhost:4200}
 ```
 
-### Environment Variables
-
-For production, override sensitive values:
-```bash
-export GCP_PROJECT_ID=your-project
-export GCP_VERTEXAI_LOCATION=us-central1
-export GCP_VERTEXAI_MODEL=gemini-2.5-pro
-```
+**Syntax**: `${ENV_VAR:default_value}` - Uses environment variable or falls back to default.
 
 ### GCP Credentials
 
@@ -607,6 +635,48 @@ The application uses **Application Default Credentials** (ADC):
      - `roles/aiplatform.user` (Vertex AI)
      - `roles/bigquery.dataViewer` (BigQuery read)
      - `roles/bigquery.jobUser` (BigQuery jobs)
+
+### Production Deployment
+
+#### Kubernetes Secrets
+
+Create a Kubernetes secret for sensitive values:
+
+```bash
+kubectl create secret generic ragchatbot-secrets \
+  --from-literal=gcp-project-id=your-project-id
+```
+
+Update `k8s/deployment.yaml` to inject environment variables:
+
+```yaml
+env:
+  - name: GCP_PROJECT_ID
+    valueFrom:
+      secretKeyRef:
+        name: ragchatbot-secrets
+        key: gcp-project-id
+  - name: GCP_VERTEX_AI_LOCATION
+    value: "us-central1"
+  - name: GCP_VERTEX_AI_MODEL
+    value: "gemini-2.5-pro"
+```
+
+#### Docker Environment
+
+Pass environment variables when running Docker:
+
+```bash
+docker run -e GCP_PROJECT_ID=your-project-id \
+           -e GCP_VERTEX_AI_LOCATION=us-central1 \
+           ragchatbot-be:latest
+```
+
+Or use an env file:
+
+```bash
+docker run --env-file .env ragchatbot-be:latest
+```
 
 ## API Endpoints
 

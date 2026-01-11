@@ -1,6 +1,6 @@
-# RAGA-AIDEV Organization
+# Build Bros Organization
 
-Welcome to **raga-aidev**, an organization focused on building intelligent, AI-powered data analysis tools that make complex datasets accessible through natural language interfaces. Currently solely developed and maintained by [ragadani](https://github.com/ragadani). :blush:
+Welcome to **build-bros**, an organization focused on building intelligent, AI-powered data analysis tools that make complex datasets accessible through natural language interfaces. Currently developed and maintained by [ragadani](https://github.com/ragadani). :blush:
 
 ## 🎯 Mission
 

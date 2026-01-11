@@ -358,5 +358,5 @@ For questions, issues, or contributions, please open an issue in the respective 
 
 ---
 
-**Built with ❤️ by the raga-aidev team**
+**Built with ❤️ by the build-bros team**
 
